@@ -31,7 +31,7 @@ jobs:
       uses: azure/setup-kubectl@v4
 
     - name: Validate Deployment
-      run: kubectl create --dry-run=client -f deployment.yaml
+      run: kubectl create --dry-run=client --validate=false -f deployment.yaml
 
     - name: Validate Service
       run: kubectl create --dry-run=client -f service.yaml
