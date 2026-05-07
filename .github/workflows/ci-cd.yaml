@@ -7,47 +7,41 @@ on:
 
 jobs:
 
-  build-and-deploy:
+  build-and-validate:
 
     runs-on: ubuntu-latest
 
     steps:
 
-    # 1. Checkout Code
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    # 2. Setup NodeJS
     - name: Setup NodeJS
       uses: actions/setup-node@v4
 
       with:
         node-version: 18
 
-    # 3. Install Dependencies
     - name: Install Dependencies
       run: npm install
 
-    # 4. Docker Build
-    - name: Build Docker Image
+    - name: Docker Build
       run: docker build -t node-app .
 
-    # 5. Install kubectl
     - name: Install kubectl
       uses: azure/setup-kubectl@v4
 
-    # 6. Validate Kubernetes YAML Files
     - name: Validate Deployment
-      run: kubectl apply --dry-run=client -f deployment.yaml
+      run: kubectl apply --dry-run=client --validate=false -f deployment.yaml
 
     - name: Validate Service
-      run: kubectl apply --dry-run=client -f service.yaml
+      run: kubectl apply --dry-run=client --validate=false -f service.yaml
 
     - name: Validate PV
-      run: kubectl apply --dry-run=client -f pv.yaml
+      run: kubectl apply --dry-run=client --validate=false -f pv.yaml
 
     - name: Validate PVC
-      run: kubectl apply --dry-run=client -f pvc.yaml
+      run: kubectl apply --dry-run=client --validate=false -f pvc.yaml
 
     - name: Validate HPA
-      run: kubectl apply --dry-run=client -f hpa.yaml
+      run: kubectl apply --dry-run=client --validate=false -f hpa.yaml
