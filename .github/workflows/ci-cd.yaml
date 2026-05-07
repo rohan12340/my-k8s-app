@@ -18,7 +18,6 @@ jobs:
 
     - name: Setup NodeJS
       uses: actions/setup-node@v4
-
       with:
         node-version: 18
 
@@ -32,16 +31,16 @@ jobs:
       uses: azure/setup-kubectl@v4
 
     - name: Validate Deployment
-      run: kubectl apply --dry-run=client --validate=false -f deployment.yaml
+      run: kubectl create --dry-run=client -f deployment.yaml
 
     - name: Validate Service
-      run: kubectl apply --dry-run=client --validate=false -f service.yaml
+      run: kubectl create --dry-run=client -f service.yaml
 
     - name: Validate PV
-      run: kubectl apply --dry-run=client --validate=false -f pv.yaml
+      run: kubectl create --dry-run=client -f pv.yaml
 
     - name: Validate PVC
-      run: kubectl apply --dry-run=client --validate=false -f pvc.yaml
+      run: kubectl create --dry-run=client -f pvc.yaml
 
     - name: Validate HPA
-      run: kubectl apply --dry-run=client --validate=false -f hpa.yaml
+      run: kubectl create --dry-run=client -f hpa.yaml
